@@ -6,7 +6,7 @@ const MovieCard = ({ movie }) => {
 			<img className="w-full rounded-t-sm" alt="" src={movie.poster_path} />
 			<div className="px-4 py-2 flex justify-between">
 				<div>
-					<p className="font-bold font-light">{movie.title}</p>
+					<p className="font-light">{movie.title}</p>
 					<p className="font-light">
 						{movie.genres?.map((g) => {
 							return g + ", ";
