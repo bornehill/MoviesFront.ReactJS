@@ -3,14 +3,22 @@
 }
 
 .input-control > label {
-	@apply font-normal font-emphasis py-1;
+	@apply font-normal font-emphasis py-1 text-movie-red;
 }
 
 .input-control > input {
-	@apply font-light px-3 py-3 rounded-sm border border-gray-400;
+	@apply font-light px-3 py-3 rounded-sm bg-movie-gray;
+}
+
+.input-control > textarea {
+	@apply font-light px-3 py-3 rounded-sm bg-movie-gray;
 }
 
 .input-control > input:focus {
+	@apply border-flame-400;
+}
+
+.input-control > textarea:focus {
 	@apply border-flame-400;
 }
 
@@ -18,11 +26,19 @@
 	@apply border-red-700;
 }
 
+.input-control.has-error > textarea {
+	@apply border-red-700;
+}
+
 .input-control > select {
-	@apply font-light px-3 py-3 rounded-sm border border-gray-400;
+	@apply font-light px-3 py-3 rounded-sm border;
 	height: 52px;
 }
 
 .input-control > select:focus {
 	@apply border-flame-400;
+}
+
+.checkbox-movie {
+	accent-color: #f65261;
 }

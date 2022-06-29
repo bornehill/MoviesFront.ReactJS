@@ -8,6 +8,18 @@ class MovieService extends BaseService {
 	getMovies() {
 		return this.instance.get("/movies");
 	}
+
+	deleteMovie(movieId) {
+		return this.instance.delete(`/movies/${movieId}`);
+	}
+
+	editMovie(movie) {
+		return this.instance.put("/movies", movie);
+	}
+
+	addMovie(movie) {
+		return this.instance.post("/movies", movie);
+	}
 }
 
 export default new MovieService();
