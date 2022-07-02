@@ -49,6 +49,7 @@ module.exports = {
 					gray: "#424242",
 					onyx: "#555555",
 					red: "#F65261",
+					black: "#232323",
 				},
 			},
 		},
