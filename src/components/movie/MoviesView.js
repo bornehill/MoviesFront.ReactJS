@@ -16,10 +16,8 @@ const MoviesView = () => {
 	const [editMovie, setEditMovie] = useState();
 
 	useEffect(() => {
-		if (movies.length) return;
-
 		loadMovies();
-	}, [movies]);
+	}, []);
 
 	const loadMovies = () => {
 		MovieService.getMovies()
