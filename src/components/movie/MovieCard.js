@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import MovieMenu from "./MovieMenu";
+import { MovieContext } from "../../providers/Movie.provider";
 
 const MovieCard = ({ movie, fnDelete, fnEdit }) => {
 	const [showMenu, setShowMenu] = useState(false);
+	const { setMovieDetail } = useContext(MovieContext);
 
 	const displayMenu = (show) => {
 		setShowMenu(show);
+	};
+
+	const showDetail = () => {
+		window.scrollTo(0, 0);
+		setMovieDetail(movie);
 	};
 
 	return (
@@ -20,7 +27,12 @@ const MovieCard = ({ movie, fnDelete, fnEdit }) => {
 				onDelete={() => fnDelete(movie.id)}
 				onEdit={() => fnEdit(movie)}
 			/>
-			<img className="w-full rounded-t-sm" alt="" src={movie.poster_path} />
+			<img
+				className="w-full rounded-t-sm"
+				alt=""
+				src={movie.poster_path}
+				onClick={showDetail}
+			/>
 			<div className="px-4 py-2 flex justify-between">
 				<div>
 					<p className="font-light">{movie.title}</p>

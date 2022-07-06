@@ -10,7 +10,7 @@ const MultiSelectControl = ({ name, label, placeHolder, origin, onChange }) => {
 	const initialize = () => {
 		const mapped = mapEnumToObject(Genres);
 
-		origin.map((o) => {
+		origin.forEach((o) => {
 			mapped[o] = !mapped[o];
 		});
 

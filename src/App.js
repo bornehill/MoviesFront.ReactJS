@@ -1,15 +1,16 @@
 import "./App.css";
-import Header from "./components/common/Header";
-import MoviesView from "./components/movie/MoviesView";
 import ErrorBoundary from "./components/common/ErrorBoundary";
+import Home from "./components/home/Home";
+import { MovieProvider } from "./providers/Movie.provider";
 
 function App() {
 	return (
 		<div className="h-screen mx-auto max-w-screen-xl">
-			<ErrorBoundary>
-				<Header />
-				<MoviesView />
-			</ErrorBoundary>
+			<MovieProvider>
+				<ErrorBoundary>
+					<Home />
+				</ErrorBoundary>
+			</MovieProvider>
 		</div>
 	);
 }

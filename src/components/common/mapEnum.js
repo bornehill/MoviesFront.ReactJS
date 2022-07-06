@@ -10,7 +10,7 @@ export function mapEnumToDropdown(enumType) {
 export function mapEnumToObject(enumType) {
 	const enumObject = {};
 
-	Object.keys(enumType).map((typeValue) => {
+	Object.keys(enumType).forEach((typeValue) => {
 		enumObject[typeValue] = false;
 	});
 
