@@ -18,4 +18,9 @@ export const Genres = {
 	Family: "Family",
 	Animation: "Animation",
 	Action: "Action",
+	Horror: "Horror",
+	Crime: "Crime",
+	Documentary: "Documentary",
+	Thriller: "Thriller",
+	Mystery: "Mystery",
 };
