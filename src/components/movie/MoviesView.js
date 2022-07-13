@@ -1,90 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import LoadingBar from "../common/LoadingBar";
 import MovieCard from "./MovieCard";
+import Filter from "../common/Filter";
 
-import MovieService from "../../services/movie.service";
+import {
+	useGetMoviesQuery,
+	useDeleteMovieMutation,
+	useEditMovieMutation,
+} from "../../reducers/movieSlice";
 
 import DeleteMovie from "./DeleteMovie";
 import FormVideo from "./FormVideo";
 
 const MoviesView = () => {
-	const [movies, setMovies] = useState([]);
-	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
-	const [deleteMovie, setDeleteMovie] = useState();
-	const [editMovie, setEditMovie] = useState();
+	const [deleteMovie] = useDeleteMovieMutation();
+	const [editMovie] = useEditMovieMutation();
+	const [sortBy, setSortBy] = useState("release_date");
+	const [filter, setFilter] = useState("");
 
-	useEffect(() => {
-		loadMovies();
-	}, []);
-
-	const loadMovies = () => {
-		MovieService.getMovies()
-			.then(({ data }) => {
-				if (data) setMovies([...data.data]);
-			})
-			.finally(() => setIsLoading(false))
-			.catch((err) => setError(err));
-	};
+	const {
+		data: movies,
+		isLoading,
+		error,
+	} = useGetMoviesQuery({ filter, sortBy });
+	const [deleteMovieId, setDeleteMovieId] = useState();
+	const [selectedMovie, setSelectedMovie] = useState();
 
 	const onDeleteMovie = (movieId) => {
-		setDeleteMovie(movieId);
+		setDeleteMovieId(movieId);
 	};
 
 	const onEditMovie = (movie) => {
-		setEditMovie(movie);
+		setSelectedMovie(movie);
 	};
 
 	const CancelDelete = () => {
-		setDeleteMovie();
+		setDeleteMovieId();
 	};
 
 	const CancelEdit = () => {
-		setEditMovie();
+		setSelectedMovie();
 	};
 
-	const ConfirmDelete = () => {
-		MovieService.deleteMovie(deleteMovie)
-			.then(({ status }) => {
-				if (status === 204) {
-					loadMovies();
-				}
-			})
-			.finally(() => setDeleteMovie())
-			.catch((err) => setError(err));
+	const ConfirmDelete = async () => {
+		await deleteMovie({ id: deleteMovieId });
+		setDeleteMovieId();
 	};
 
-	const ConfirmEdit = (movie) => {
-		MovieService.editMovie(movie)
-			.then(({ status }) => {
-				if (status === 200) {
-					loadMovies();
-				}
-			})
-			.finally(() => setEditMovie())
-			.catch((err) => setError(err));
+	const ConfirmEdit = async (movie) => {
+		await editMovie(movie);
+		setSelectedMovie();
 	};
 
 	return (
 		<React.Fragment>
-			{deleteMovie && (
+			{deleteMovieId && (
 				<DeleteMovie onCancel={CancelDelete} onConfirm={ConfirmDelete} />
 			)}
-			{editMovie && (
+			{selectedMovie && (
 				<FormVideo
-					movie={editMovie}
+					movie={selectedMovie}
 					onCancel={CancelEdit}
 					onEdit={ConfirmEdit}
 				/>
 			)}
-			<div className="bg-movie-gray mt-5">
+			<Filter sortBy={sortBy} onSort={setSortBy} onFilter={setFilter} />
+			<div className="bg-movie-gray">
 				{isLoading && <LoadingBar />}
 				{error && (
 					<p className="mt-2 text-sm p-2 text-white bg-red-700">{error}</p>
 				)}
 				<div className="flex flex-wrap">
-					{movies.length > 0 &&
+					{movies?.length > 0 &&
 						movies.map((m) => (
 							<MovieCard
 								key={m.id}

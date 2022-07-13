@@ -1,40 +1,35 @@
 import React, { useState } from "react";
 
-import MovieService from "../../services/movie.service";
+import { useAddMovieMutation } from "../../reducers/movieSlice";
 
 import SuccessMsg from "../movie/SuccessMsg";
 import FormVideo from "../movie/FormVideo";
 import { movieEmpty } from "../../components/types/common";
 
 const Header = () => {
+	const [addMovie, { error }] = useAddMovieMutation();
 	const [showMsg, setShowMsg] = useState(false);
-	const [addMovie, setAddMovie] = useState();
-	const [error, setError] = useState("");
+	const [newMovie, setNewMovie] = useState();
 
 	const closeMsg = () => {
 		setShowMsg(false);
 	};
 
 	const CancelAdd = () => {
-		setAddMovie();
+		setNewMovie();
 	};
 
 	const onAddMovie = () => {
-		setAddMovie({ ...movieEmpty });
+		setNewMovie({ ...movieEmpty });
 	};
 
-	const ConfirmAdd = (movie) => {
+	const ConfirmAdd = async (movie) => {
 		movie.vote_average = +movie.vote_average;
 		movie.runtime = +movie.runtime;
 
-		MovieService.addMovie(movie)
-			.then(({ status }) => {
-				if (status === 201) {
-					setShowMsg(true);
-				}
-			})
-			.finally(() => setAddMovie())
-			.catch((err) => setError(err));
+		await addMovie(movie);
+		setNewMovie();
+		if (!error) setShowMsg(true);
 	};
 
 	return (
@@ -46,8 +41,8 @@ const Header = () => {
 					onCancel={closeMsg}
 				/>
 			)}
-			{addMovie && (
-				<FormVideo movie={addMovie} onCancel={CancelAdd} onEdit={ConfirmAdd} />
+			{newMovie && (
+				<FormVideo movie={newMovie} onCancel={CancelAdd} onEdit={ConfirmAdd} />
 			)}
 			{error && (
 				<p className="mt-2 text-sm p-2 text-white bg-red-700">{error}</p>
