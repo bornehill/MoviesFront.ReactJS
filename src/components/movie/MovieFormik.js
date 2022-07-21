@@ -33,7 +33,7 @@ const MovieFormik = ({ movie, onCancel, onEdit }) => {
 		}),
 		onSubmit: (values) => {
 			onEdit({ ...movie, ...values });
-		},
+		}
 	});
 
 	return (
@@ -158,7 +158,7 @@ const MovieFormik = ({ movie, onCancel, onEdit }) => {
 							id="btnReset"
 							className="text-movie-red border border-movie-red md:w-1/4 p-1 md:py-2 rounded"
 							type="reset"
-							onClick={() => formik.resetForm({ values: { ...movie } })}
+							onClick={formik.handleReset}
 						>
 							RESET
 						</button>
