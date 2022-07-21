@@ -10,8 +10,8 @@ import {
 	useEditMovieMutation,
 } from "../../reducers/movieSlice";
 
-import DeleteMovie from "./DeleteMovie";
-import FormVideo from "./FormVideo";
+import DeleteMovieFormik from "./DeleteMovieFormik";
+import MovieFormik from "./MovieFormik";
 
 const MoviesView = () => {
 	const [deleteMovie] = useDeleteMovieMutation();
@@ -56,10 +56,10 @@ const MoviesView = () => {
 	return (
 		<React.Fragment>
 			{deleteMovieId && (
-				<DeleteMovie onCancel={CancelDelete} onConfirm={ConfirmDelete} />
+				<DeleteMovieFormik onCancel={CancelDelete} onConfirm={ConfirmDelete} />
 			)}
 			{selectedMovie && (
-				<FormVideo
+				<MovieFormik
 					movie={selectedMovie}
 					onCancel={CancelEdit}
 					onEdit={ConfirmEdit}

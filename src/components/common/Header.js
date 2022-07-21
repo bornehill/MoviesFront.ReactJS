@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAddMovieMutation } from "../../reducers/movieSlice";
 
 import SuccessMsg from "../movie/SuccessMsg";
-import FormVideo from "../movie/FormVideo";
+import MovieFormik from "../movie/MovieFormik";
 import { movieEmpty } from "../../components/types/common";
 
 const Header = () => {
@@ -27,9 +27,13 @@ const Header = () => {
 		movie.vote_average = +movie.vote_average;
 		movie.runtime = +movie.runtime;
 
-		await addMovie(movie);
-		setNewMovie();
-		if (!error) setShowMsg(true);
+		try {
+			await addMovie(movie).unwrap();
+			setShowMsg(true);
+		} catch {
+		} finally {
+			setNewMovie();
+		}
 	};
 
 	return (
@@ -42,10 +46,16 @@ const Header = () => {
 				/>
 			)}
 			{newMovie && (
-				<FormVideo movie={newMovie} onCancel={CancelAdd} onEdit={ConfirmAdd} />
+				<MovieFormik
+					movie={newMovie}
+					onCancel={CancelAdd}
+					onEdit={ConfirmAdd}
+				/>
 			)}
 			{error && (
-				<p className="mt-2 text-sm p-2 text-white bg-red-700">{error}</p>
+				<p className="mt-2 text-sm p-2 text-white bg-red-700">
+					{error.status} - {error.data.messages[0]}
+				</p>
 			)}
 			<header className="bg-movie-gray py-4">
 				<div className="px-8 md:flex md:items-center md:justify-between">
