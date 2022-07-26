@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { useAddMovieMutation } from "../../reducers/movieSlice";
 
 import SuccessMsg from "../movie/SuccessMsg";
@@ -7,9 +7,11 @@ import MovieFormik from "../movie/MovieFormik";
 import { movieEmpty } from "../../components/types/common";
 
 const Header = () => {
+	const navigate = useNavigate();
 	const [addMovie, { error }] = useAddMovieMutation();
 	const [showMsg, setShowMsg] = useState(false);
 	const [newMovie, setNewMovie] = useState();
+	const [search, setSearch] = useState("");
 
 	const closeMsg = () => {
 		setShowMsg(false);
@@ -21,6 +23,10 @@ const Header = () => {
 
 	const onAddMovie = () => {
 		setNewMovie({ ...movieEmpty });
+	};
+
+	const SearchHandler = () => {
+		navigate(`/search/${search}`);
 	};
 
 	const ConfirmAdd = async (movie) => {
@@ -78,10 +84,13 @@ const Header = () => {
 						id="search"
 						className="text-white bg-movie-onyx mx-2 md:mr-4 md:w-2/3"
 						placeholder="What do you what to watch?"
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
 					/>
 					<button
 						id="btnSearch"
 						className="text-white bg-movie-red md:w-1/4 p-1 md:py-2 rounded"
+						onClick={SearchHandler}
 					>
 						SEARCH
 					</button>

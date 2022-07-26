@@ -6,12 +6,15 @@ export const apiSlice = createApi({
 	tagTypes: ["Movies"],
 	endpoints: (builder) => ({
 		getMovies: builder.query({
-			query: ({ filter, sortBy }) =>
-				`/movies?filter=${filter}&sortBy=${sortBy}&sortOrder=desc`,
+			query: ({ filter, sortBy, search }) =>
+				`/movies?search=${search}&searchBy=title&filter=${filter}&sortBy=${sortBy}&sortOrder=desc`,
 			transformResponse: (responseData) => {
 				return responseData.data;
 			},
 			providesTags: ["Movies"],
+		}),
+		getMovieById: builder.query({
+			query: ({ movieId }) => `/movies/${movieId}`,
 		}),
 		deleteMovie: builder.mutation({
 			query: (movie) => ({
@@ -41,6 +44,7 @@ export const apiSlice = createApi({
 
 export const {
 	useGetMoviesQuery,
+	useGetMovieByIdQuery,
 	useEditMovieMutation,
 	useDeleteMovieMutation,
 	useAddMovieMutation,
