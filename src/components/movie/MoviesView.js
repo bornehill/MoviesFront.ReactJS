@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import LoadingBar from "../common/LoadingBar";
 import MovieCard from "./MovieCard";
 import Filter from "../common/Filter";
@@ -13,17 +13,19 @@ import {
 import DeleteMovieFormik from "./DeleteMovieFormik";
 import MovieFormik from "./MovieFormik";
 
-const MoviesView = () => {
+const MoviesView = ({ searchQuery, filterQuery, sortQuery }) => {
+	const navigate = useNavigate();
 	const [deleteMovie] = useDeleteMovieMutation();
 	const [editMovie] = useEditMovieMutation();
-	const [sortBy, setSortBy] = useState("release_date");
-	const [filter, setFilter] = useState("");
+	const [sortBy, setSortBy] = useState(sortQuery ?? "release_date");
+	const [filter, setFilter] = useState(filterQuery ?? "");
+	const search = searchQuery ?? "";
 
 	const {
 		data: movies,
 		isLoading,
 		error,
-	} = useGetMoviesQuery({ filter, sortBy });
+	} = useGetMoviesQuery({ filter, sortBy, search });
 	const [deleteMovieId, setDeleteMovieId] = useState();
 	const [selectedMovie, setSelectedMovie] = useState();
 
@@ -53,6 +55,16 @@ const MoviesView = () => {
 		setSelectedMovie();
 	};
 
+	const FilterHandler = (filter) => {
+		setFilter(filter);
+		navigate(`/search${filter ? `?genre=${filter}` : ""}`);
+	};
+
+	const SortHandler = (sort) => {
+		setSortBy(sort);
+		navigate(`/search${sort ? `?sortBy=${sort}` : ""}`);
+	};
+
 	return (
 		<React.Fragment>
 			{deleteMovieId && (
@@ -65,7 +77,7 @@ const MoviesView = () => {
 					onEdit={ConfirmEdit}
 				/>
 			)}
-			<Filter sortBy={sortBy} onSort={setSortBy} onFilter={setFilter} />
+			<Filter sortBy={sortBy} onSort={SortHandler} onFilter={FilterHandler} />
 			<div className="bg-movie-gray">
 				{isLoading && <LoadingBar />}
 				{error && (

@@ -3,13 +3,13 @@ import React, { createContext, useState } from "react";
 export const MovieContext = createContext();
 
 export const MovieProvider = ({ children }) => {
-	const [movieDetail, setMovieDetail] = useState();
+	const [movieDetailId, setMovieDetailId] = useState();
 
 	return (
 		<MovieContext.Provider
 			value={{
-				movieDetail,
-				setMovieDetail,
+				movieDetailId,
+				setMovieDetailId,
 			}}
 		>
 			{children}

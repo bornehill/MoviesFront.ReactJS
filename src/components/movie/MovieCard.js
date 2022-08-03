@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import MovieMenu from "./MovieMenu";
 import { MovieContext } from "../../providers/Movie.provider";
 
 const MovieCard = ({ movie, fnDelete, fnEdit }) => {
+	const navigate = useNavigate();
 	const [showMenu, setShowMenu] = useState(false);
-	const { setMovieDetail } = useContext(MovieContext);
+	const { setMovieDetailId } = useContext(MovieContext);
 
 	const displayMenu = (show) => {
 		setShowMenu(show);
@@ -13,7 +15,8 @@ const MovieCard = ({ movie, fnDelete, fnEdit }) => {
 
 	const showDetail = () => {
 		window.scrollTo(0, 0);
-		setMovieDetail(movie);
+		setMovieDetailId(movie.id);
+		navigate(`/search?movie=${movie.id}`);
 	};
 
 	return (
