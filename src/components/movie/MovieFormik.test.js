@@ -25,7 +25,7 @@ test("MovieFormik should be showed", async () => {
 		/>
 	);
 
-	expect(screen.getByText("EDIT MOVIE")).toBeInTheDocument();
+	await waitFor(() => expect(screen.getByText("EDIT MOVIE")).toBeInTheDocument());
 
 	const btnSubmit = screen.getByText("SUBMIT");
 	userEvent.click(btnSubmit);
