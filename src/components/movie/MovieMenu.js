@@ -17,7 +17,10 @@ const MovieMenu = ({ show, onDelete, onEdit }) => {
 									className: "mt-5 text-2xl absolute rounded-full bg-black",
 								}}
 							>
-								<HiDotsVertical onClick={() => setShowOptions(true)} />
+								<HiDotsVertical
+									aria-label="mnuopt"
+									onClick={() => setShowOptions(true)}
+								/>
 							</IconContext.Provider>
 						</div>
 					)}
