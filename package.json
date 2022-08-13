@@ -24,7 +24,8 @@
 		"autoprefixer": "^9.8.6",
 		"postcss-cli": "^7.1.2",
 		"postcss-import": "^12.0.1",
-		"tailwindcss": "^1.8.10"
+		"tailwindcss": "^1.8.10",
+		"msw": "^0.41.1"
 	},
 	"scripts": {
 		"build:styles": "postcss src/styles/tailwind.css -o src/main.css",

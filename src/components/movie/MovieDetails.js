@@ -39,6 +39,7 @@ const MovieDetails = ({ movieId }) => {
 							<FiSearch
 								style={{ transform: "rotate(90deg)" }}
 								onClick={() => resetMovie()}
+								aria-label="closedetail"
 							/>
 						</IconContext.Provider>
 					</div>
