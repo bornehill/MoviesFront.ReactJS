@@ -18,8 +18,8 @@ const testMovie = {
 		"https://image.tmdb.org/t/p/w500/gW5MnkQ9zHtyVPzdDDHPEDCrZ57.jpg",
 };
 
-test("MovieCard should be showed", () => {
-	render(
+test("MovieCard should be showed and match snapshot", () => {
+	const card = render(
 		<BrowserRouter>
 			<MovieProvider>
 				<Routes>
@@ -39,6 +39,7 @@ test("MovieCard should be showed", () => {
 	);
 
 	expect(screen.getByText("The Blackcoat's Daughter")).toBeInTheDocument();
+	expect(card).toMatchSnapshot();
 });
 
 test("MovieCard should show details", async () => {
