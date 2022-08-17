@@ -33,7 +33,7 @@ const MovieFormik = ({ movie, onCancel, onEdit }) => {
 		}),
 		onSubmit: (values) => {
 			onEdit({ ...movie, ...values });
-		}
+		},
 	});
 
 	return (
@@ -45,7 +45,7 @@ const MovieFormik = ({ movie, onCancel, onEdit }) => {
 							className: "text-2xl",
 						}}
 					>
-						<AiOutlineClose onClick={onCancel} />
+						<AiOutlineClose aria-label="cancel" onClick={onCancel} />
 					</IconContext.Provider>
 				</div>
 				<h2 className="text-2xl font-light">{title} MOVIE</h2>

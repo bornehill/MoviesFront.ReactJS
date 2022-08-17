@@ -53,8 +53,8 @@ const MultiSelectControl = ({ name, label, placeHolder, origin, onChange }) => {
 							className: "text-movie-red text-2xl",
 						}}
 					>
-						{!open && <IoMdArrowDropdown />}
-						{open && <IoMdArrowDropup />}
+						{!open && <IoMdArrowDropdown aria-label="dropdownrow" />}
+						{open && <IoMdArrowDropup aria-label="dropdownrow" />}
 					</IconContext.Provider>
 				</div>
 				{open && (
