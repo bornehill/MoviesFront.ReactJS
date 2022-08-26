@@ -1,5 +1,5 @@
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Home from "./components/home/Home";
 import NotFound from "./components/common/NotFound";
